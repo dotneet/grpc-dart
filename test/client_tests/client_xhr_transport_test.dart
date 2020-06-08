@@ -25,7 +25,7 @@ class MockClient extends Mock implements Client {}
 class MockRequest extends Mock implements Request {}
 
 class MockXhrClientConnection extends XhrClientConnection {
-  MockXhrClientConnection() : super(Uri.parse('test:8080'));
+  MockXhrClientConnection() : super(Uri.parse('test:8080'), false);
 
   MockRequest latestRequest = MockRequest();
   final client = MockClient();

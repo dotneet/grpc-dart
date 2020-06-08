@@ -1,4 +1,4 @@
-// Copyright (c) 2019, the gRPC project authors. Please see the AUTHORS file
+// Copyright (c) 2020, the gRPC project authors. Please see the AUTHORS file
 // for details. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,19 +13,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'channel.dart';
-import 'connection.dart';
-import 'transport/xhr_transport.dart';
+import 'package:http/http.dart';
 
-/// A channel to a grpc-web endpoint.
-class GrpcWebClientChannel extends ClientChannelBase {
-  final Uri uri;
-  final bool withCredentials;
-
-  GrpcWebClientChannel.xhr(this.uri, {this.withCredentials = false}) : super();
-
-  @override
-  ClientConnection createConnection() {
-    return XhrClientConnection(uri, withCredentials);
-  }
+void setWithCredentials(Client client, bool value) {
+  // ignore
 }

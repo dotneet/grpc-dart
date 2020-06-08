@@ -25,6 +25,8 @@ import '../../shared/status.dart';
 import '../connection.dart';
 import 'transport.dart';
 import 'web_streams.dart';
+import 'xhr_settings_stub.dart'
+  if (dart.library.html) 'xhr_settings.dart';
 
 class XhrTransportStream implements GrpcTransportStream {
   final Client _client;
@@ -114,11 +116,12 @@ class XhrTransportStream implements GrpcTransportStream {
 
 class XhrClientConnection extends ClientConnection {
   final Uri uri;
+  final bool withCredentials;
   Client _client;
 
   final Set<XhrTransportStream> _requests = Set<XhrTransportStream>();
 
-  XhrClientConnection(this.uri) {
+  XhrClientConnection(this.uri, this.withCredentials) {
     _client = createClient();
   }
 
@@ -138,7 +141,11 @@ class XhrClientConnection extends ClientConnection {
   Request createHttpRequest(String path) => Request('POST', uri.resolve(path));
 
   @visibleForTesting
-  Client createClient() => Client();
+  Client createClient() {
+    final client = Client();
+    setWithCredentials(client, this.withCredentials);
+    return client;
+  }
 
   @override
   GrpcTransportStream makeRequest(String path, Duration timeout,
